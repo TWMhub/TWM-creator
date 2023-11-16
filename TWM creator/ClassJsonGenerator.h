@@ -11,7 +11,7 @@ public:
 
 private:
 
-	std::vector<std::vector<std::string>> ñraftGrid_Items;
+	Grid craft;
 
 
 
