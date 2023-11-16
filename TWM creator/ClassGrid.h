@@ -7,7 +7,9 @@ class Grid
 {
 protected:
 
-	void getGrid();
+	std::string getGrid() {
+		
+	}
 private:
 	struct GridStruct
 	{
