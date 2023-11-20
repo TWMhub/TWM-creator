@@ -210,7 +210,7 @@ std::string checkingForPresenceOfPath(std::string nameOfPath) {
 		return doc[nameOfPath.c_str()].GetString();
 	}
 
-	return "a";
+	return "NULL";
 }
 
 std::string chekVersion() {
@@ -231,7 +231,7 @@ std::string chekVersion() {
 		return doc[jsonTableName.c_str()].GetString();
 	}
 
-	return "a";
+	return "NULL";
 }
 
 bool isPathsEmpty() {
