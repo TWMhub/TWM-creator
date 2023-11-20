@@ -20,7 +20,7 @@ public:
 		radBevel = ApplyButtonBevel(angle);
 		build();
 	};
-
+	//женя лох
 	SFMLButton(double lenght, double height, double angle, sf::Color color) :
 		height(height), lenght(lenght), color(color) {
 		Button.setFillColor(color);
