@@ -11,7 +11,7 @@ void shell(std::string &pathUser){
     //std::system("data\\diskChek.bat");
   
     BROWSEINFO bi = { 0 };
-    bi.lpszTitle = L"choose a folder:";
+    bi.lpszTitle = L"Choose a folder:";
     bi.ulFlags = BIF_EDITBOX | BIF_NEWDIALOGSTYLE; // Использовать стандартный стиль проводника
 
     LPITEMIDLIST pidl = SHBrowseForFolder(&bi);
@@ -21,7 +21,7 @@ void shell(std::string &pathUser){
         SHGetPathFromIDList(pidl, path);
 
         // Путь к выбранной папке находится в переменной 'path'
-        MessageBox(NULL, path, L"selected folder", MB_OK | MB_ICONINFORMATION);
+        MessageBox(NULL, path, L"Selected folder", MB_OK | MB_ICONINFORMATION);
      
 
         // Освобождаем ресурсы
@@ -35,7 +35,7 @@ void shell(std::string &pathUser){
         pathUser = stringPath;
     }
     else {
-        MessageBox(NULL, L"folder selection canceled", L"cancel", MB_OK | MB_ICONEXCLAMATION);
+        MessageBox(NULL, L"Folder selection canceled", L"Cancel", MB_OK | MB_ICONEXCLAMATION);
     }
 
    
