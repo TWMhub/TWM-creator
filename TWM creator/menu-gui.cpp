@@ -32,7 +32,7 @@ int main() {
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
 
-	sf::RenderWindow menu(sf::VideoMode::getDesktopMode(),"TWM creator by depozit",sf::Style::Fullscreen,settings);
+	sf::RenderWindow menu(sf::VideoMode::getDesktopMode(),"TWM creator by depozit",sf::Style::Default,settings);
 
 	menu.setFramerateLimit(60);
 	menu.setVerticalSyncEnabled(true);
