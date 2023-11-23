@@ -32,21 +32,27 @@ int main() {
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
 
-	sf::RenderWindow menu(sf::VideoMode::getDesktopMode(),"TWM creator by depozit",sf::Style::Default,settings);
+	sf::RenderWindow menu(sf::VideoMode::getDesktopMode(), "TWM creator by depozit", sf::Style::Fullscreen, settings);
 
 	menu.setFramerateLimit(60);
 	menu.setVerticalSyncEnabled(true);
 	
-	sf::Font speedFont,lazerFont;
+	sf::Font speedFont, lazerFont, concielFont, brunoFont;
 	if (!speedFont.loadFromFile("fonts\\speed-speed-700.ttf")) {
 		std::cerr << "Speed font not load";
 	}
 	if (!lazerFont.loadFromFile("fonts\\Roboto.ttf")) {
 		std::cerr << "Lazer font not load";
 	}
+	if (!concielFont.loadFromFile("fonts\\concielianalpha.ttf")) {
+		std::cerr << "conciel font not load";
+	}
+	if (!brunoFont.loadFromFile("fonts\\BrunoAceSC-Regular.ttf")) {
+		std::cerr << "bruno font not load";
+	}
 
 	sf::Texture backgroundTexture;
-	if (!backgroundTexture.loadFromFile("textures\\application\\back.png")) {
+	if (!backgroundTexture.loadFromFile("textures\\application\\!back.png")) {
 		std::cerr << "Background texture not load";
 	}
 
@@ -57,84 +63,68 @@ int main() {
 	
 
 	sf::Text name1,name2,versionText;
-	name1.setFont(speedFont);
+	name1.setFont(concielFont);
 	name1.setString("TWM");
-	name1.setCharacterSize(80);
-	name1.setFillColor(SetColor("text_main"));
-	name1.setPosition(sf::Vector2f(120, 100));
-	name1.setOutlineColor(SetColor("outline_main"));
-	name1.setOutlineThickness(2.5);
+	name1.setCharacterSize(160);
+	name1.setFillColor(SetColor("text_name_main"));
+	name1.setPosition(sf::Vector2f(1920/2-name1.getGlobalBounds().width/2-80, 15));
 
-	name2.setFont(speedFont);
+	name2.setFont(concielFont);
 	name2.setString("creator");
-	name2.setCharacterSize(45);
-	name2.setFillColor(SetColor("text_main"));
-	name2.setPosition(sf::Vector2f(520 - name2.getGlobalBounds().width, 5 + name1.getGlobalBounds().top + name1.getGlobalBounds().height));
-	name2.setOutlineColor(SetColor("outline_main"));
-	name2.setOutlineThickness(1.5);
+	name2.setCharacterSize(95);
+	name2.setFillColor(SetColor("text_name_second"));
+	name2.setPosition(sf::Vector2f(1920 / 2 - name2.getGlobalBounds().width / 2 + 50, name1.getGlobalBounds().top + name1.getGlobalBounds().height - 30));
+	
 
-	versionText.setFont(speedFont);
+	versionText.setFont(concielFont);
 	versionText.setString(chekVersion());
 	versionText.setCharacterSize(15);
-	versionText.setFillColor(SetColor("text_main"));
+	versionText.setFillColor(SetColor("text_name_second"));
 	versionText.setPosition(name2.getGlobalBounds().left+name2.getGlobalBounds().width-versionText.getGlobalBounds().width, name2.getGlobalBounds().top + name2.getGlobalBounds().height + 10);
 
 
-	SFMLButton creatorButton(400,140,60,SetColor("button"));
-	creatorButton.setPos(120, 330);
+	SFMLButton creatorButton(400,90,5,SetColor("menu_button_active"));
+	creatorButton.setCenterByWindowByX(menu,350);
 	
-	SFMLButton drawerButton(400, 140, 60, SetColor("disabled_button"));
+	SFMLButton drawerButton(400, 90, 5, SetColor("menu_button_inactive"));
 	drawerButton.setPos(creatorButton.getPos().x, creatorButton.getPos().y + 40 + creatorButton.getSize().y);
 
-	SFMLButton settingsButton(300, 105, 45, SetColor("button"));
+	SFMLButton settingsButton(400, 90, 2.5, SetColor("menu_button_active"));
 	settingsButton.setPos(creatorButton.getPos().x+creatorButton.getSize().x/2-settingsButton.getSize().x/2, creatorButton.getPos().y + 40 * 2 + drawerButton.getSize().y * 2);
 
-	SFMLButton exitButton(200, 95, 45, SetColor("button"));
+	SFMLButton exitButton(200, 75, 2.5, SetColor("menu_button_active"));
 	exitButton.setPos(creatorButton.getPos().x + creatorButton.getSize().x / 2 - exitButton.getSize().x / 2, settingsButton.getPos().y + settingsButton.getSize().y + 40);
-
-	float shadowX = 7, shadowY = shadowX;
-	SFMLButton ShadowButton1(400, 140, 60, SetColor("outline", 200));
-	SFMLButton ShadowButton2(300, 105, 45, SetColor("outline", 200));
-	SFMLButton ShadowButton3(200, 95, 45, SetColor("outline", 200));
 	
 
 	sf::Text nameButtonCraftCreator, nameButtonTexturePainter, nameButtonSettings, nameButtonExit;
 
-	nameButtonCraftCreator.setFont(lazerFont);
+	nameButtonCraftCreator.setFont(brunoFont);
 	nameButtonCraftCreator.setString("Craft Creator");
-	nameButtonCraftCreator.setCharacterSize(35);
-	nameButtonCraftCreator.setFillColor(SetColor("text"));
+	nameButtonCraftCreator.setCharacterSize(30);
+	nameButtonCraftCreator.setFillColor(SetColor("menu_text"));
 	nameButtonCraftCreator.setPosition(creatorButton.getPosForText(nameButtonCraftCreator));
-	nameButtonCraftCreator.setOutlineThickness(1);
-	nameButtonCraftCreator.setOutlineColor(SetColor("outline"));
-	nameButtonCraftCreator.setLetterSpacing(1.5f);
-
-	nameButtonTexturePainter.setFont(lazerFont);
+	nameButtonCraftCreator.move(0, -5);
+	
+	nameButtonTexturePainter.setFont(brunoFont);
 	nameButtonTexturePainter.setString("Texture  Painter");
-	nameButtonTexturePainter.setCharacterSize(35);
-	nameButtonTexturePainter.setFillColor(SetColor("text"));
+	nameButtonTexturePainter.setCharacterSize(30);
+	nameButtonTexturePainter.setFillColor(SetColor("menu_text"));
 	nameButtonTexturePainter.setPosition(drawerButton.getPosForText(nameButtonTexturePainter));
-	nameButtonTexturePainter.setOutlineThickness(1);
-	nameButtonTexturePainter.setOutlineColor(SetColor("outline"));
-	nameButtonTexturePainter.setLetterSpacing(1.5f);
+	nameButtonTexturePainter.move(0, -5);
 	
-	nameButtonSettings.setFont(lazerFont);
+	nameButtonSettings.setFont(brunoFont);
 	nameButtonSettings.setString("settings");
-	nameButtonSettings.setCharacterSize(25);
-	nameButtonSettings.setFillColor(SetColor("text"));
+	nameButtonSettings.setCharacterSize(30);
+	nameButtonSettings.setFillColor(SetColor("menu_text"));
 	nameButtonSettings.setPosition(settingsButton.getPosForText(nameButtonSettings));
-	nameButtonSettings.setOutlineThickness(1);
-	nameButtonSettings.setOutlineColor(SetColor("outline"));
-	nameButtonSettings.setLetterSpacing(1.5f);
+	nameButtonSettings.move(0, -5);
 	
-	nameButtonExit.setFont(lazerFont);
+	nameButtonExit.setFont(brunoFont);
 	nameButtonExit.setString("exit");
 	nameButtonExit.setCharacterSize(25);
-	nameButtonExit.setFillColor(SetColor("text"));
+	nameButtonExit.setFillColor(SetColor("menu_text"));
 	nameButtonExit.setPosition(exitButton.getPosForText(nameButtonExit));
-	nameButtonExit.setOutlineThickness(1);
-	nameButtonExit.setOutlineColor(SetColor("outline"));
-	nameButtonExit.setLetterSpacing(1.5f);
+	nameButtonExit.move(0, -5);
 
 	
 	while (menu.isOpen()) {
@@ -193,44 +183,19 @@ int main() {
 		menu.draw(name2);
 		menu.draw(versionText);
 
-		ShadowButton1.setPos(creatorButton.getPos().x + shadowX, creatorButton.getPos().y + shadowY);
-		menu.draw(ShadowButton1);
+		
 		menu.draw(creatorButton);
-
-		setTextShadow(nameButtonCraftCreator, SetColor("outline"));
-		menu.draw(nameButtonCraftCreator);
-		removeTextShadow(nameButtonCraftCreator, SetColor("text"));
 		menu.draw(nameButtonCraftCreator);
 
-
-		ShadowButton1.setPos(drawerButton.getPos().x + shadowX, drawerButton.getPos().y + shadowY);
-		menu.draw(ShadowButton1);
 		menu.draw(drawerButton);
-
-		setTextShadow(nameButtonTexturePainter, SetColor("outline"));
-		menu.draw(nameButtonTexturePainter);
-		removeTextShadow(nameButtonTexturePainter, SetColor("text"));
 		menu.draw(nameButtonTexturePainter);
 
-
-		ShadowButton2.setPos(settingsButton.getPos().x + shadowX, settingsButton.getPos().y + shadowY);
-		menu.draw(ShadowButton2);
 		menu.draw(settingsButton);
-
-		setTextShadow(nameButtonSettings, SetColor("outline"));
 		menu.draw(nameButtonSettings);
-		removeTextShadow(nameButtonSettings, SetColor("text"));
-		menu.draw(nameButtonSettings);
-
-
-		ShadowButton3.setPos(exitButton.getPos().x + shadowX, exitButton.getPos().y + shadowY);
-		menu.draw(ShadowButton3);
+		
 		menu.draw(exitButton);
-
-		setTextShadow(nameButtonExit, SetColor("outline"));
 		menu.draw(nameButtonExit);
-		removeTextShadow(nameButtonExit, SetColor("text"));
-		menu.draw(nameButtonExit);
+	
 
 
 		menu.display();

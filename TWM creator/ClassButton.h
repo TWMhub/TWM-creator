@@ -58,8 +58,8 @@ public:
 	}
 
 	sf::Vector2f getPosForText(sf::Text text) {
-		return sf::Vector2f(Button.getGlobalBounds().left + Button.getLocalBounds().width / 2 - text.getLocalBounds().width / 2,
-			Button.getGlobalBounds().top + Button.getLocalBounds().height / 2 - text.getGlobalBounds().height / 2);
+		return sf::Vector2f(Button.getPosition().x + Button.getGlobalBounds().width / 2 - text.getGlobalBounds().width / 2,
+			Button.getPosition().y + height / 2 - text.getGlobalBounds().height / 2);
 	}
 	bool IsMouseOnButton(sf::Vector2i pos) {
 		if (pos.x > Button.getGlobalBounds().left && pos.x < Button.getGlobalBounds().left + Button.getLocalBounds().width) {
@@ -111,6 +111,12 @@ public:
 		
 		Button.setTexture(background);
 		Button.setTextureRect(sf::IntRect(0, 0, 16, 16));
+	}
+
+	void setCenterByWindowByX(const sf::RenderWindow& window, double posY) {
+		double centerWindow =/* window.getPosition().x +*/ window.getSize().x / 2;
+		setPos((centerWindow - getSize().x / 2), posY);
+		build();
 	}
 
 
