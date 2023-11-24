@@ -56,6 +56,14 @@ int main() {
 		std::cerr << "Background texture not load";
 	}
 
+	sf::Shader testShader;
+	if (sf::Shader::isAvailable())
+	{
+		if (!testShader.loadFromFile("textures\\application\\testShader.jpg", sf::Shader::Vertex))
+		{
+			std::cerr << "shader not load";
+		}
+	}
 
 	sf::Sprite backgroundTextureRect;
 	backgroundTextureRect.setTexture(backgroundTexture);
@@ -90,7 +98,7 @@ int main() {
 	drawerButton.setPos(creatorButton.getPos().x, creatorButton.getPos().y + 40 + creatorButton.getSize().y);
 
 	SFMLButton settingsButton(400, 90, 2.5, SetColor("menu_button_active"));
-	settingsButton.setPos(creatorButton.getPos().x+creatorButton.getSize().x/2-settingsButton.getSize().x/2, creatorButton.getPos().y + 40 * 2 + drawerButton.getSize().y * 2);
+	settingsButton.setPos(creatorButton.getPos().x + creatorButton.getSize().x / 2 - settingsButton.getSize().x / 2, creatorButton.getPos().y + 40 * 2 + drawerButton.getSize().y * 2);
 
 	SFMLButton exitButton(200, 75, 2.5, SetColor("menu_button_active"));
 	exitButton.setPos(creatorButton.getPos().x + creatorButton.getSize().x / 2 - exitButton.getSize().x / 2, settingsButton.getPos().y + settingsButton.getSize().y + 40);
@@ -144,7 +152,7 @@ int main() {
 				}
 			}
 			else {
-				creatorButton.setColor(SetColor("button"));
+				creatorButton.setColor(SetColor("menu_button_active"));
 			}
 
 			if (settingsButton.IsMouseOnButton(sf::Mouse::getPosition())) {
@@ -157,7 +165,7 @@ int main() {
 				}
 			}
 			else {
-				settingsButton.setColor(SetColor("button"));
+				settingsButton.setColor(SetColor("menu_button_active"));
 			}
 
 			if (exitButton.IsMouseOnButton(sf::Mouse::getPosition())) {
@@ -168,7 +176,7 @@ int main() {
 				}
 			}
 			else {
-				exitButton.setColor(SetColor("button"));
+				exitButton.setColor(SetColor("menu_button_active"));
 			}
 
 
@@ -184,7 +192,7 @@ int main() {
 		menu.draw(versionText);
 
 		
-		menu.draw(creatorButton);
+		menu.draw(creatorButton, &testShader);
 		menu.draw(nameButtonCraftCreator);
 
 		menu.draw(drawerButton);
