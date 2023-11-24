@@ -50,7 +50,7 @@ public:
 		this->color = color;
 	}
 	sf::Vector2f getSize() {
-		return sf::Vector2f(lenght, height);
+		return sf::Vector2f(Button.getGlobalBounds().width, Button.getGlobalBounds().height);
 	}
 
 	sf::Vector2f getPos() {
@@ -107,10 +107,17 @@ public:
 		window.draw(itemName);
 	}
 
-	void drawSprite(const sf::Texture& itemTesxture, sf::Vector2f SpritePos0XY, sf::RenderWindow& Window){
+	void drawSprite(const sf::Texture& itemTesxture, sf::Vector2f SpritePos0XY,sf::Vector2f scale, sf::RenderWindow& window){
 		sf::Sprite itemSprite(itemTesxture);
-		sf::Vector2f posSprite = sf::Vector2f(Button.getPosition().x + (itemSprite.getGlobalBounds().width/2), Button.getPosition().y + itemSprite.getGlobalBounds().);
-		itemSprite.setPosition(sf::Vector2f())
+		itemSprite.setScale(scale);
+
+		sf::Vector2f posSprite = sf::Vector2f(getPos().x + getSize().x/2-itemSprite.getGlobalBounds().width/2+SpritePos0XY.x,
+			getPos().y + getSize().y / 2 - itemSprite.getGlobalBounds().height / 2 + SpritePos0XY.y);
+
+
+		itemSprite.setPosition(posSprite);
+		window.draw(Button);
+		window.draw(itemSprite);
 	}
 
 	void setTexture(const sf::Texture* background) {
