@@ -23,8 +23,7 @@ bool isPathsEmpty();
 void craftCreatorWindow(sf::RenderWindow & menu);
 std::string chekVersion();
 
-int main() {
-
+int menu(sf::RenderWindow & creatorWindow) {
 	if (isPathsEmpty()) {
 		startWindow();
 	}
@@ -208,6 +207,17 @@ int main() {
 
 
 		menu.display();
+		try
+		{
+			if (creatorWindow.isOpen()) {
+				creatorWindow.close();
+			}
+		}
+		catch (const std::exception&)
+		{
+
+		}
+		
 	}
 
 	

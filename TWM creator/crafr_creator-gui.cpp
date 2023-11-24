@@ -20,7 +20,7 @@ void writeTextureAsThreadWithBorders(std::promise<std::vector<sf::Texture>>& pro
 
 void writeTexturesToBinary(const std::vector<sf::Texture>& allTextures);
 std::vector<sf::Texture> readTexturesFromBinary();
-
+int main(sf::RenderWindow & craftCreator);
 void craftCreatorWindow(sf::RenderWindow & menu) {
 	
 	//vector with all items 
@@ -146,7 +146,7 @@ void craftCreatorWindow(sf::RenderWindow & menu) {
 	SFMLButton scrollButton(19.6, 35, 5, SetColor("button"));
 	scrollButton.setPos(350.2, 50);
 
-	SFMLButton returnToMenu(40, 20, 1, SetColor("button"));
+	SFMLButton returnToMenu(40, 30, 1, SetColor("button"));
 	returnToMenu.setPos(1920 - returnToMenu.getSize().x, 0);
 	//returnToMenu.setPos(1000, 900);
 
@@ -183,6 +183,19 @@ void craftCreatorWindow(sf::RenderWindow & menu) {
 		while (creatorWindow.pollEvent(event)){
 			if (event.type == sf::Event::Closed) {
 				creatorWindow.close();
+			}
+
+			if (returnToMenu.IsMouseOnButton(sf::Mouse::getPosition())) {
+				returnToMenu.setColor(SetColor("button_shade"));
+
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left()))
+				{
+					main(creatorWindow);
+				}
+			}
+			else
+			{
+				returnToMenu.setColor(SetColor("button"));
 			}
 
 			//scrolling with middle button
