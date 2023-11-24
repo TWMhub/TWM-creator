@@ -50,7 +50,7 @@ public:
 		this->color = color;
 	}
 	sf::Vector2f getSize() {
-		return sf::Vector2f(lenght, height);
+		return sf::Vector2f(Button.getGlobalBounds().width, Button.getGlobalBounds().height);
 	}
 
 	sf::Vector2f getPos() {
@@ -58,8 +58,8 @@ public:
 	}
 
 	sf::Vector2f getPosForText(sf::Text text) {
-		return sf::Vector2f(Button.getGlobalBounds().left + Button.getLocalBounds().width / 2 - text.getLocalBounds().width / 2,
-			Button.getGlobalBounds().top + Button.getLocalBounds().height / 2 - text.getGlobalBounds().height / 2);
+		return sf::Vector2f(Button.getPosition().x + Button.getGlobalBounds().width / 2 - text.getGlobalBounds().width / 2,
+			Button.getPosition().y + height / 2 - text.getGlobalBounds().height / 2);
 	}
 	bool IsMouseOnButton(sf::Vector2i pos) {
 		if (pos.x > Button.getGlobalBounds().left && pos.x < Button.getGlobalBounds().left + Button.getLocalBounds().width) {
@@ -107,10 +107,29 @@ public:
 		window.draw(itemName);
 	}
 
+	void drawSprite(const sf::Texture& itemTesxture, sf::Vector2f SpritePos0XY,sf::Vector2f scale, sf::RenderWindow& window){
+		sf::Sprite itemSprite(itemTesxture);
+		itemSprite.setScale(scale);
+
+		sf::Vector2f posSprite = sf::Vector2f(getPos().x + getSize().x/2-itemSprite.getGlobalBounds().width/2+SpritePos0XY.x,
+			getPos().y + getSize().y / 2 - itemSprite.getGlobalBounds().height / 2 + SpritePos0XY.y);
+
+
+		itemSprite.setPosition(posSprite);
+		window.draw(Button);
+		window.draw(itemSprite);
+	}
+
 	void setTexture(const sf::Texture* background) {
 		
 		Button.setTexture(background);
 		Button.setTextureRect(sf::IntRect(0, 0, 16, 16));
+	}
+
+	void setCenterByWindowByX(const sf::RenderWindow& window, double posY) {
+		double centerWindow =/* window.getPosition().x +*/ window.getSize().x / 2;
+		setPos((centerWindow - getSize().x / 2), posY);
+		build();
 	}
 
 

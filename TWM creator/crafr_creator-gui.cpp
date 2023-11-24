@@ -21,8 +21,8 @@ void writeTextureAsThreadWithBorders(std::promise<std::vector<sf::Texture>>& pro
 void writeTexturesToBinary(const std::vector<sf::Texture>& allTextures);
 std::vector<sf::Texture> readTexturesFromBinary();
 
-void craftCreatorWindow() {
-
+void craftCreatorWindow(sf::RenderWindow & menu) {
+	
 	//vector with all items 
 	std::vector<std::string> allItemsNames{};
 	std::vector<sf::Texture> allItemsTexture{};
@@ -88,18 +88,23 @@ void craftCreatorWindow() {
 
 	sf::Font textFont;
 	if (!textFont.loadFromFile("fonts\\GalscBold.otf")) {
-		std::cerr << "font not load" << std::endl;
+		std::cerr << "Font not load" << std::endl;
 	}
 
 	sf::Texture noneTexture;
 	if (!noneTexture.loadFromFile("textures\\application\\none_texture.png")) {
-		std::cerr << "none texture not load" << std::endl;
+		std::cerr << "None texture not load" << std::endl;
 		return;
 	}
 
 	sf::Texture minecraftVanilaBack;
 	if (!minecraftVanilaBack.loadFromFile("textures\\application\\grass_block_side.png")) {
-		std::cerr << "minecraft back not load" << std::endl;
+		std::cerr << "Minecraft back not load" << std::endl;
+	}
+	sf::Texture returnToMenuTexture;
+	if (!returnToMenuTexture.loadFromFile("textures\\application\\returnButton.png"))
+	{
+		std::cerr << "Return Button not load";
 	}
 
 	//rect with names & textures items
@@ -119,12 +124,6 @@ void craftCreatorWindow() {
 		
 	}
 
-
-
-	
-
-	
-	
 
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
@@ -146,6 +145,10 @@ void craftCreatorWindow() {
 	
 	SFMLButton scrollButton(19.6, 35, 5, SetColor("button"));
 	scrollButton.setPos(350.2, 50);
+
+	SFMLButton returnToMenu(40, 20, 1, SetColor("button"));
+	returnToMenu.setPos(1920 - returnToMenu.getSize().x, 0);
+	//returnToMenu.setPos(1000, 900);
 
 	sf::Sprite searchIcon(searchIconTexture);
 	searchIcon.setScale(sf::Vector2f(0.1,0.1));
@@ -238,72 +241,9 @@ void craftCreatorWindow() {
 
 
 			startItem = counterItems * 10;
-			/*if (scrollButton.IsMouseOnButton(sf::Mouse::getPosition(creatorWindow))) {
-				isMouseOnScrollButton = true;
 
-				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-					isScrollButtonActive = true;
-				}
-
-			}
-			else {
-				isMouseOnScrollButton = false;
-			}
-
-
-			if ((scrollBackgroundRect.IsMouseOnButton(sf::Mouse::getPosition()) || scrollBorderLine.IsMouseOnButton(sf::Mouse::getPosition())) && event.type == sf::Event::MouseWheelScrolled) {
-				isScrolling = true;
-
-				if (scrollButton.getPos().y > 50 && scrollButton.getPos().y < sf::VideoMode::getDesktopMode().height - scrollButton.getSize().y) {
-					scrollButton.move(0, event.mouseWheelScroll.delta * -10);
-					counterItems += event.mouseWheelScroll.delta * -1;
-					scrollButton.setPos(scrollButton.getPos().x, 55 + stepScrollButoon * counterItems / 11);
-
-				}
-				else if (scrollButton.getPos().y <= 50) {
-					scrollButton.setPos(scrollButton.getPos().x, 51);
-				}
-				else if (scrollButton.getPos().y > 1080 - scrollButton.getSize().y - 1) {
-					scrollButton.setPos(scrollButton.getPos().x, 1080 - scrollButton.getSize().y * 2);
-				}
-			}
-			else {
-				isScrolling = false;
-			}
-
-
-			if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-				isScrollButtonActive = false;
-			}
-			if (isScrollButtonActive) {
-				scrollButton.setColor(SetColor("button_shade"));
-				counterItems = scrollButton.simulationScrollByMouse(sf::Mouse::getPosition(), scrollBackgroundRect.getPos().y, scrollBackgroundRect.getPos().y + scrollBackgroundRect.getSize().y, allItemsNames.size());
-			}
-			else if (isScrolling) {
-				scrollButton.setColor(SetColor("button_shade"));
-			}
-			else if (isMouseOnScrollButton) {
-				scrollButton.setColor(SetColor("disabled_button"));
-			}
-			else {
-				scrollButton.setColor(SetColor("button"));
-			}
-
-			if (counterItems < 0) {
-				counterItems = 0;
-			}
-			if (counterItems > allItemsNames.size() - 2) {
-				counterItems = allItemsNames.size() - 2;
-			}*/
-
-			
 			
 		}
-
-		//TODO проблемная залупа допилить
-		
-		//std::cerr << stepScrollButoon+50*counterItems << std::endl;
-		//::cerr << counterItems << std::endl;
 		
 		creatorWindow.clear(SetColor("background"));
 		creatorWindow.draw(scrollBackgroundRect);
@@ -312,11 +252,10 @@ void craftCreatorWindow() {
 		creatorWindow.draw(searchRect);
 		creatorWindow.draw(searchIcon);
 
+		returnToMenu.drawSprite(returnToMenuTexture, sf::Vector2f(0, 0),sf::Vector2f(0.05,0.05), creatorWindow);
+
 		for (int i = 0; i < COUNT_BUTTONS_ON_SCROLL_MENU; ++i) {
-			if (i + startItem > allItemsNames.size()-1) {
-				buttonsInScrollMenu[i].DrawItem(noneTexture, "", textFont, SetColor("text"), creatorWindow);
-			}
-			else {
+			if (i + startItem < allItemsNames.size()) {
 				buttonsInScrollMenu[i].DrawItem(allItemsTexture[i + startItem], allItemsNames[i + startItem], textFont, SetColor("text"), creatorWindow);
 			}
 		}
@@ -325,7 +264,9 @@ void craftCreatorWindow() {
 	
 
 		creatorWindow.display();
-
+		if (menu.isOpen()) {
+			menu.close();
+		}
 		
 
 	}
