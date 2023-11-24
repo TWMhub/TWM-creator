@@ -21,8 +21,8 @@ void writeTextureAsThreadWithBorders(std::promise<std::vector<sf::Texture>>& pro
 void writeTexturesToBinary(const std::vector<sf::Texture>& allTextures);
 std::vector<sf::Texture> readTexturesFromBinary();
 
-void craftCreatorWindow() {
-
+void craftCreatorWindow(sf::RenderWindow & menu) {
+	
 	//vector with all items 
 	std::vector<std::string> allItemsNames{};
 	std::vector<sf::Texture> allItemsTexture{};
@@ -88,18 +88,23 @@ void craftCreatorWindow() {
 
 	sf::Font textFont;
 	if (!textFont.loadFromFile("fonts\\GalscBold.otf")) {
-		std::cerr << "font not load" << std::endl;
+		std::cerr << "Font not load" << std::endl;
 	}
 
 	sf::Texture noneTexture;
 	if (!noneTexture.loadFromFile("textures\\application\\none_texture.png")) {
-		std::cerr << "none texture not load" << std::endl;
+		std::cerr << "None texture not load" << std::endl;
 		return;
 	}
 
 	sf::Texture minecraftVanilaBack;
 	if (!minecraftVanilaBack.loadFromFile("textures\\application\\grass_block_side.png")) {
-		std::cerr << "minecraft back not load" << std::endl;
+		std::cerr << "Minecraft back not load" << std::endl;
+	}
+	sf::Texture returnToMenuTexture;
+	if (!returnToMenuTexture.loadFromFile("textures\\application\\returnButton.png"))
+	{
+		std::cerr << "Return Button not load";
 	}
 
 	//rect with names & textures items
@@ -146,6 +151,9 @@ void craftCreatorWindow() {
 	
 	SFMLButton scrollButton(19.6, 35, 5, SetColor("button"));
 	scrollButton.setPos(350.2, 50);
+
+	SFMLButton returnToMenu(40, 20, 1, SetColor("button"));
+	returnToMenu.setPos(1920 - returnToMenu.getSize().x, 0);
 
 	sf::Sprite searchIcon(searchIconTexture);
 	searchIcon.setScale(sf::Vector2f(0.1,0.1));
@@ -311,12 +319,9 @@ void craftCreatorWindow() {
 		creatorWindow.draw(scrollButton);
 		creatorWindow.draw(searchRect);
 		creatorWindow.draw(searchIcon);
-
+		creatorWindow.draw(returnToMenu);
 		for (int i = 0; i < COUNT_BUTTONS_ON_SCROLL_MENU; ++i) {
-			if (i + startItem > allItemsNames.size()-1) {
-				buttonsInScrollMenu[i].DrawItem(noneTexture, "", textFont, SetColor("text"), creatorWindow);
-			}
-			else {
+			if (i + startItem < allItemsNames.size()) {
 				buttonsInScrollMenu[i].DrawItem(allItemsTexture[i + startItem], allItemsNames[i + startItem], textFont, SetColor("text"), creatorWindow);
 			}
 		}
@@ -325,7 +330,9 @@ void craftCreatorWindow() {
 	
 
 		creatorWindow.display();
-
+		if (menu.isOpen()) {
+			menu.close();
+		}
 		
 
 	}

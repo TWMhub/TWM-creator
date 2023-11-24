@@ -20,7 +20,7 @@ void removeTextShadow(sf::Text& text, sf::Color textColor);
 void startWindow();
 void startSettingsWindow();
 bool isPathsEmpty();
-void craftCreatorWindow();
+void craftCreatorWindow(sf::RenderWindow & menu);
 std::string chekVersion();
 
 int main() {
@@ -147,8 +147,8 @@ int main() {
 			if (creatorButton.IsMouseOnButton(sf::Mouse::getPosition())) {
 				creatorButton.setColor(SetColor("button_shade"));
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-					menu.close();
-					craftCreatorWindow();
+					//menu.close();
+					craftCreatorWindow(menu);
 				}
 			}
 			else {
@@ -158,9 +158,10 @@ int main() {
 			if (settingsButton.IsMouseOnButton(sf::Mouse::getPosition())) {
 				settingsButton.setColor(SetColor("button_shade"));
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-					menu.setVisible(false);
 					startSettingsWindow();
 					menu.setVisible(true);
+					//menu.setVisible(false);
+					
 				
 				}
 			}

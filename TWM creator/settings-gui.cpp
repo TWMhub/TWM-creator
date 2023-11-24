@@ -56,9 +56,7 @@ void settingWindow(std::string headerText, std::string , std::string text) {
 
 
 	
-	
-	
-	
+
 
 	HWND hwnd = settingsWindow.getSystemHandle();
 	SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);

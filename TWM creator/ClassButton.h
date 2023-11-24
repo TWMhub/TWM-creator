@@ -107,6 +107,12 @@ public:
 		window.draw(itemName);
 	}
 
+	void drawSprite(const sf::Texture& itemTesxture, sf::Vector2f SpritePos0XY, sf::RenderWindow& Window){
+		sf::Sprite itemSprite(itemTesxture);
+		sf::Vector2f posSprite = sf::Vector2f(Button.getPosition().x + (itemSprite.getGlobalBounds().width/2), Button.getPosition().y + itemSprite.getGlobalBounds().);
+		itemSprite.setPosition(sf::Vector2f())
+	}
+
 	void setTexture(const sf::Texture* background) {
 		
 		Button.setTexture(background);
