@@ -159,7 +159,9 @@ void settingWindow(std::string headerText, std::string , std::string text) {
 		}
 
 		
-
+		settingsWindow.setActive(true);
+		settingsWindow.setVisible(true);
+	
 		
 		settingsWindow.clear(SetColor("background"));
 		settingsWindow.draw(pathButton1);

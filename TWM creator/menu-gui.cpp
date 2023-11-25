@@ -33,7 +33,6 @@ int main() {
 	settings.antialiasingLevel = 8;
 
 	sf::RenderWindow menu(sf::VideoMode::getDesktopMode(), "TWM creator by depozit", sf::Style::Fullscreen, settings);
-
 	menu.setFramerateLimit(60);
 	menu.setVerticalSyncEnabled(true);
 	
@@ -56,14 +55,11 @@ int main() {
 		std::cerr << "Background texture not load";
 	}
 
-	sf::Shader testShader;
-	if (sf::Shader::isAvailable())
-	{
-		if (!testShader.loadFromFile("textures\\application\\testShader.jpg", sf::Shader::Vertex))
-		{
-			std::cerr << "shader not load";
-		}
+	sf::Image iconForMenu;
+	if (!iconForMenu.loadFromFile("textures\\application\\icon.png")) {
+		std::cerr << "icon not load" << std::endl;
 	}
+	menu.setIcon(iconForMenu.getSize().x, iconForMenu.getSize().y, iconForMenu.getPixelsPtr());
 
 	sf::Sprite backgroundTextureRect;
 	backgroundTextureRect.setTexture(backgroundTexture);
@@ -158,10 +154,15 @@ int main() {
 			if (settingsButton.IsMouseOnButton(sf::Mouse::getPosition())) {
 				settingsButton.setColor(SetColor("button_shade"));
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+					//sf::Thread thread(&startSettingsWindow);
+					sf::Vector2u sizeWindow{ menu.getSize().x,menu.getSize().y };
+					menu.setSize(sf::Vector2u(1920,1800));
+					menu.setActive(false);
 					startSettingsWindow();
-					menu.setVisible(true);
-					//menu.setVisible(false);
-					
+					menu.setActive(true);
+					menu.setSize(sizeWindow);
+					//thread.launch();
+					//thread.wait();
 				
 				}
 			}
@@ -193,7 +194,7 @@ int main() {
 		menu.draw(versionText);
 
 		
-		menu.draw(creatorButton, &testShader);
+		menu.draw(creatorButton);
 		menu.draw(nameButtonCraftCreator);
 
 		menu.draw(drawerButton);
