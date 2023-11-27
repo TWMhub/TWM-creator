@@ -13,17 +13,19 @@
         "outline_path_color": "#1677ff",
         "text_settings": "#000000",
         "text_settings_disable": "#808080",
-        "scroll_background_rect":"#828282",
-        "scroll_border_line":"#79a0c1",
-        "search_rect":"#4682b4",
-        "button_outline":"#1e5945",
-        "text_name_main":"#913AFF",
-        "text_name_second":"#4e4e4e",
-        "menu_button_active":"#913AFF",
-        "menu_button_inactive":"#4e4e4e",
-        "menu_text":"#ffffff"
+        "scroll_background_rect": "#828282",
+        "scroll_border_line": "#79a0c1",
+        "search_rect": "#4682b4",
+        "button_outline": "#1e5945",
+        "text_name_main": "#913AFF",
+        "text_name_second": "#4e4e4e",
+        "menu_button_active": "#913AFF",
+        "menu_button_inactive": "#4e4e4e",
+        "menu_text": "#ffffff",
+        "setings_folder_background":"#4e4e4e",
+        "settings_path_rect":"#545454"
     },
-    "path_to_crafts": "D:\\TWM dump\\TWM creator\\TWM creator\\crafts",
-    "path_to_src_icons_from_mod": "D:\\TWM dump\\TWM creator\\TWM creator\\textures\\creator\\icons\\minecraft",
-    "version":"alpha 0.5"
+    "path_to_crafts": "C:\\Intel\\iGfx\\XeFX\\Discovery.exe_20404",
+    "path_to_src_icons_from_mod": "C:\\Users\\Depozit\\.designer\\backup\\tmp",
+    "version": "alpha 0.5"
 }

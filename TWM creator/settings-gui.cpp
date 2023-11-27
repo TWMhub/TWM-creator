@@ -34,29 +34,28 @@ void settingWindow(std::string headerText, std::string , std::string text) {
 	SFMLButton doneButton(100, 50, 20, 225, 10, SetColor("pathColor"));
 	SFMLButton exitButton(100, 50, 20, 25, 10, SetColor("pathColor"));
 	
-	
-	
 
-	sf::Font speedFont;
+	sf::Font speedFont, brunoFont;
 	if (!speedFont.loadFromFile("fonts\\Roboto.ttf")) {
 		std::cerr << "Speed font not load";
 	}
+	if (!brunoFont.loadFromFile("fonts\\BrunoAceSC-Regular.ttf")) {
+		std::cerr << "bruno font not load";
+	}
 
 
-	sf::Text pathToCrafts("Select the path where the crafts will be stored.", speedFont, 15);
-	sf::Text pathToIcons("Select the path where the icons will be stored.", speedFont, 15);
-	sf::Text doneText("Done", speedFont, 20);
+	sf::Text pathToCrafts("Select the path where the crafts will be stored.", brunoFont, 15);
+	sf::Text pathToIcons("Select the path where the icons will be stored.", brunoFont, 15);
+	sf::Text doneText("Done", brunoFont, 20);
+	sf::Text exitText("Exit", brunoFont, 20);
+
 	doneText.setFillColor(SetColor("text_settings"));
 	doneText.setPosition(doneButton.getPosForText(doneText));
-	doneText.move(0, -3);
-	sf::Text exitText("Exit", speedFont, 20);
+	
+	
 	exitText.setFillColor(SetColor("text_settings"));
 	exitText.setPosition(exitButton.getPosForText(exitText));
-	exitText.move(0, -3);
-
-
 	
-
 
 	HWND hwnd = settingsWindow.getSystemHandle();
 	SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);

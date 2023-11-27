@@ -20,7 +20,7 @@ public:
 		radBevel = ApplyButtonBevel(angle);
 		build();
 	};
-	//женя лох
+	
 	SFMLButton(double lenght, double height, double angle, sf::Color color) :
 		height(height), lenght(lenght), color(color) {
 		Button.setFillColor(color);
@@ -59,8 +59,9 @@ public:
 
 	sf::Vector2f getPosForText(sf::Text text) {
 		return sf::Vector2f(Button.getPosition().x + Button.getGlobalBounds().width / 2 - text.getGlobalBounds().width / 2,
-			Button.getPosition().y + height / 2 - text.getGlobalBounds().height / 2);
+			Button.getPosition().y + Button.getGlobalBounds().height / 2 - text.getGlobalBounds().height / 2);
 	}
+
 	bool IsMouseOnButton(sf::Vector2i pos) {
 		if (pos.x > Button.getGlobalBounds().left && pos.x < Button.getGlobalBounds().left + Button.getLocalBounds().width) {
 			if (pos.y > Button.getGlobalBounds().top && pos.y < Button.getGlobalBounds().top + Button.getLocalBounds().height) {
@@ -121,7 +122,6 @@ public:
 	}
 
 	void setTexture(const sf::Texture* background) {
-		
 		Button.setTexture(background);
 		Button.setTextureRect(sf::IntRect(0, 0, 16, 16));
 	}
@@ -130,6 +130,17 @@ public:
 		double centerWindow =/* window.getPosition().x +*/ window.getSize().x / 2;
 		setPos((centerWindow - getSize().x / 2), posY);
 		build();
+	}
+
+	void setCenterByWindow(const sf::RenderWindow& window) {
+		double centerX = window.getSize().x / 2;
+		double centerY = window.getSize().y / 2;
+		setPos(centerX - getSize().x / 2, centerY - getSize().y / 2);
+		build();
+	}
+
+	sf::FloatRect getGlobalBounds() {
+		return Button.getGlobalBounds();
 	}
 
 
