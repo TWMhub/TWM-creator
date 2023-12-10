@@ -35,9 +35,6 @@
     <ClInclude Include="coloration.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="ClassButtonSFML.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="auxiliary functions.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -51,6 +48,12 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="ClassSizeGrid.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="modsMenuClass.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="SFMLClasses.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,7 +6,6 @@
 #define auxiliary_functions_h
 #undef min
 #undef max
-#define auxilary_functions_H
 #define coloration_h
 
 std::string shorteningTheString(const std::string& path);

@@ -92,6 +92,10 @@ public:
 		Button.move(x, y);
 	}
 
+	void move(sf::Vector2f pos) {
+		Button.move(pos);
+	}
+
 	void DrawItem(const sf::Texture& itemTexture,const std::string& nameItem, const sf::Font& font,const sf::Color& colorText, sf::RenderWindow& window) {
 		sf::Sprite itemSptite(itemTexture);
 		itemSptite.setPosition(sf::Vector2f(posX + 22, getPos().y + getSize().y/2 - itemSptite.getGlobalBounds().height / 2));

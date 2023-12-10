@@ -141,11 +141,12 @@
   <ItemGroup>
     <ClInclude Include="auxiliary functions.h" />
     <ClInclude Include="ClassButton.h" />
-    <ClInclude Include="ClassButtonSFML.h" />
     <ClInclude Include="ClassGrid.h" />
     <ClInclude Include="ClassSizeGrid.h" />
     <ClInclude Include="coloration.h" />
     <ClInclude Include="ClassJsonGenerator.h" />
+    <ClInclude Include="modsMenuClass.h" />
+    <ClInclude Include="SFMLClasses.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
