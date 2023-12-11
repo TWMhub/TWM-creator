@@ -3,6 +3,8 @@
 #include "ClassButton.h"
 #include <iostream>
 #include <vector>
+#include <Windows.h>
+
 #define coloration_h
 #define auxiliary_functions_h
 
@@ -10,7 +12,9 @@ std::string chekVersion();
 sf::Color SetColor(std::string col);
 sf::Color SetColor(std::string col, float alphaColor);
 void craftCreatorWindow(sf::RenderWindow& menu);
-
+void shell(std::string& pathUser); 
+std::string checkingForPresenceOfPath(std::string nameOfPath);
+std::string shorteningTheString(const std::string& path);
 
 class MenuMain {
 public:
@@ -96,6 +100,8 @@ public:
 		nameButtonExit.setFillColor(SetColor("menu_text"));
 		nameButtonExit.setPosition(exitButton.getPosForText(nameButtonExit));
 		nameButtonExit.move(0, -5);
+
+		//setBasePos();
 	}
 
 	void EventHandler(sf::Event& event, sf::RenderWindow& menu, bool& isSettingsActive) {
@@ -161,8 +167,12 @@ public:
 		exitButton.move(pos);
 	}
 
+	/*bool isNormalPos() {
+		return objectPos[0] == name1.getPosition();
+	}*/
+
 private:
-	void setBasePos() {
+	/*void setBasePos() {
 		objectPos.push_back(name1.getPosition());
 		objectPos.push_back(name2.getPosition());
 		objectPos.push_back(versionText.getPosition());
@@ -174,7 +184,7 @@ private:
 		objectPos.push_back(drawerButton.getPos());
 		objectPos.push_back(settingsButton.getPos());
 		objectPos.push_back(exitButton.getPos());
-	}
+	}*/
 	sf::Texture folderTexture;
 	sf::Text name1, name2, versionText;
 	sf::Font speedFont, lazerFont, concielFont, brunoFont;
@@ -200,21 +210,29 @@ public:
 		SFMLButton backSettingsI(600, 400, 5, SetColor("settings_back", 245));
 		backSettingsI.setCenterByWindow(menu);
 
-		SFMLButton folderPath1I(50, 50, 5, SetColor("setings_folder_background"));
-		folderPath1I.setPos(backSettingsI.getGlobalBounds().left + 50, backSettingsI.getGlobalBounds().top + 200);
+		SFMLButton folderPath1I(60, 60, 5, SetColor("setings_folder_background"));
+		folderPath1I.setPos(backSettingsI.getGlobalBounds().left + 50, backSettingsI.getGlobalBounds().top + 150);
 
-		SFMLButton folderPath2I(50, 50, 5, SetColor("setings_folder_background"));
-		folderPath2I.setPos(backSettingsI.getGlobalBounds().left + 50, backSettingsI.getGlobalBounds().top + 200 + 10 + folderPath1I.getGlobalBounds().height);
+		SFMLButton folderPath2I(60, 60, 5, SetColor("setings_folder_background"));
+		folderPath2I.setPos(backSettingsI.getGlobalBounds().left + 50, backSettingsI.getGlobalBounds().top + 150 + 25 + folderPath1I.getGlobalBounds().height);
 
-		SFMLButton pathRect1I(420, 50, 5, SetColor("settings_path_rect", 200));
+		SFMLButton pathRect1I(420, 60, 5, SetColor("settings_path_rect", 200));
 		pathRect1I.setPos(folderPath1I.getGlobalBounds().left + folderPath1I.getGlobalBounds().width + 10, folderPath1I.getGlobalBounds().top);
 
-		SFMLButton pathRect2I(420, 50, 5, SetColor("settings_path_rect", 200));
+		SFMLButton pathRect2I(420, 60, 5, SetColor("settings_path_rect", 200));
 		pathRect2I.setPos(folderPath2I.getGlobalBounds().left + folderPath2I.getGlobalBounds().width + 10, folderPath2I.getGlobalBounds().top);
 
 		SFMLButton returnButtonI(100, 50, 5, SetColor("setings_folder_background"));
 		returnButtonI.setPos(backSettingsI.getGlobalBounds().left + backSettingsI.getGlobalBounds().width - returnButtonI.getGlobalBounds().width - 5,
 			backSettingsI.getGlobalBounds().top + backSettingsI.getGlobalBounds().height - returnButtonI.getGlobalBounds().height - 5);
+
+		SFMLButton languageButton1I(100, 30, 1,SetColor("menu_button_inactive"));
+		languageButton1I.setPos(backSettingsI.getGlobalBounds().left + backSettingsI.getGlobalBounds().width / 2 - languageButton1I.getSize().x, backSettingsI.getGlobalBounds().top + 50);
+
+		SFMLButton languageButton2I(100, 30, 1, SetColor("menu_button_inactive"));
+		languageButton2I.setPos(backSettingsI.getGlobalBounds().left + backSettingsI.getGlobalBounds().width / 2 , backSettingsI.getGlobalBounds().top + 50);
+
+		
 
 		returnButtonText.setFont(brunoFont);
 		returnButtonText.setString("return");
@@ -223,24 +241,58 @@ public:
 		returnButtonText.setPosition(returnButtonI.getPosForText(returnButtonText));
 		returnButtonText.move(sf::Vector2f(0, -5));
 
+		languageText.setFont(brunoFont);
+		languageText.setString("will be localization");
+		languageText.setCharacterSize(15);
+		languageText.setFillColor(SetColor("menu_text"));
+		languageText.setPosition(sf::Vector2f(
+			backSettingsI.getPos().x+backSettingsI.getSize().x/2-languageText.getGlobalBounds().width/2,
+			languageButton1I.getPos().y+languageButton1I.getSize().y/2- languageText.getGlobalBounds().height/2));
+		languageText.move(sf::Vector2f(0, -5));
+
+		folderText1.setFont(brunoFont);
+		folderText1.setString(shorteningTheString(checkingForPresenceOfPath("path_to_crafts")));
+		folderText1.setCharacterSize(20);
+		folderText1.setFillColor(SetColor("menu_text"));
+		folderText1.setPosition(pathRect1I.getPosForText(folderText1));
+		folderText1.move(sf::Vector2f(0, -5));
+
+		folderText2.setFont(brunoFont);
+		folderText2.setString(shorteningTheString(checkingForPresenceOfPath("path_to_src_icons_from_mod")));
+		folderText2.setCharacterSize(20);
+		folderText2.setFillColor(SetColor("menu_text"));
+		folderText2.setPosition(pathRect2I.getPosForText(folderText2));
+		folderText2.move(sf::Vector2f(0, -5));
+
+		HWND hwnd1 = menu.getSystemHandle();
+		SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+
 		backSettings = backSettingsI;
 		folderPath1 = folderPath1I;
 		folderPath2 = folderPath2I;
 		pathRect1 = pathRect1I;
 		pathRect2 = pathRect2I;
 		returnButton = returnButtonI;
+		languageButton1 = languageButton1I;
+		languageButton2 = languageButton2I;
+		hwnd = hwnd1;
 
-		setBasePos();
+		//setBasePos();
 	}
 
 	void draw(sf::RenderWindow& menu) {
 		menu.draw(backSettings);
-		folderPath1.drawSprite(folderTexture, sf::Vector2f(0, 0), sf::Vector2f(0.05, 0.05), menu);
-		folderPath2.drawSprite(folderTexture, sf::Vector2f(0, 0), sf::Vector2f(0.05, 0.05), menu);
+		folderPath1.drawSprite(folderTexture, sf::Vector2f(-3, -3), sf::Vector2f(0.06, 0.06), menu);
+		folderPath2.drawSprite(folderTexture, sf::Vector2f(-3, -3), sf::Vector2f(0.06, 0.06), menu);
 		menu.draw(pathRect1);
 		menu.draw(pathRect2);
 		menu.draw(returnButton);
 		menu.draw(returnButtonText);
+		menu.draw(languageButton1);
+		menu.draw(languageButton2);
+		menu.draw(languageText);
+		menu.draw(folderText1);
+		menu.draw(folderText2);
 	}
 
 	void move(sf::Vector2f pos) {
@@ -253,9 +305,90 @@ public:
 		returnButton.move(pos);
 	}
 
+	void EventHandler(sf::Event& event, sf::RenderWindow& menu,bool& isSettingsActive) {
+
+		
+
+		if (folderPath1.IsMouseOnButton(sf::Mouse::getPosition(menu))) {
+			folderPath1.setOutline(SetColor("outline_main"), 5);
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+				sf::Vector2u sizeWindow(menu.getSize().x, menu.getSize().y);
+				menu.setSize(sf::Vector2u(1919, 1079));
+				menu.setActive(false);
+
+				SetWindowPos(hwnd, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+				std::string namePath = "";
+				shell(namePath);
+				if (namePath != "") {
+					setNewPath("path_to_crafts", namePath);
+				}
+				SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+
+				menu.setActive(true);
+				menu.setSize(sizeWindow);
+				
+				folderText1.setString(shorteningTheString(checkingForPresenceOfPath("path_to_crafts")));
+				folderText1.setPosition(pathRect1.getPosForText(folderText1));
+			}
+		}
+		else {
+			folderPath1.setOutline(SetColor("outline_path_color"), 5);
+		}
+
+		if (folderPath2.IsMouseOnButton(sf::Mouse::getPosition(menu))) {
+			folderPath2.setOutline(SetColor("outline_main"), 5);
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+
+				sf::Vector2u sizeWindow(menu.getSize().x,menu.getSize().y);
+				menu.setSize(sf::Vector2u(1919, 1079));
+				menu.setActive(false);
+
+				SetWindowPos(hwnd, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+				std::string namePath = "";
+				shell(namePath);
+				if (namePath != "") {
+					setNewPath("path_to_src_icons_from_mod", namePath);
+				}
+
+				SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+
+				menu.setActive(true);
+				menu.setSize(sizeWindow);
+
+				folderText2.setString(shorteningTheString(checkingForPresenceOfPath("path_to_src_icons_from_mod")));
+				folderText2.setPosition(pathRect2.getPosForText(folderText2));
+			}
+		}
+		else {
+			folderPath2.setOutline(SetColor("outline_path_color"), 5);
+		}
+		if (returnButton.IsMouseOnButton(sf::Mouse::getPosition())) {
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+				if (checkingForPresenceOfPath("path_to_crafts") == "") {
+					setNewPath("path_to_crafts", get—urrentPath() + "\\crafts");
+				}
+				if (checkingForPresenceOfPath("path_to_src_icons_from_mod") == "") {
+					setNewPath("path_to_src_icons_from_mod", get—urrentPath() + "\\textures\\creator\\icons\\minecraft");
+				}
+
+				isSettingsActive = !isSettingsActive;
+			}
+			returnButton.setColor(SetColor("menu_button_active"));
+		}
+		else {
+			returnButton.setColor(SetColor("setings_folder_background"));
+		}
+	}
+
+
+
+	/*bool isNormalPos() {
+		return objectsPos[1] == backSettings.getPos();
+	}*/
+
 private:
 
-	void setBasePos() {
+	/*void setBasePos() {
 		objectsPos.push_back(returnButtonText.getPosition());
 		objectsPos.push_back(backSettings.getPos());
 		objectsPos.push_back(folderPath1.getPos());
@@ -263,11 +396,14 @@ private:
 		objectsPos.push_back(pathRect1.getPos());
 		objectsPos.push_back(pathRect2.getPos());
 		objectsPos.push_back(returnButton.getPos());
-	}
+	}*/
 
 	sf::Texture folderTexture;
 	sf::Font brunoFont;
-	sf::Text returnButtonText;
-	SFMLButton backSettings, folderPath1, folderPath2, pathRect1, pathRect2, returnButton;
+	sf::Text returnButtonText, languageText, folderText1, folderText2;
+	SFMLButton backSettings, folderPath1, folderPath2, pathRect1, pathRect2, returnButton, languageButton1, languageButton2;
 	std::vector<sf::Vector2f> objectsPos;
+	HWND hwnd;
 };
+
+

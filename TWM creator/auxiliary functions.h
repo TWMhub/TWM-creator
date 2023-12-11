@@ -148,8 +148,8 @@ std::string getСurrentPath() {
 }
 
 std::string shorteningTheString(const std::string& path) {
-	const size_t MaxLength = 40;
-	const size_t EdgeLength = 20; // Длина начальной и конечной части строки
+	const size_t MaxLength = 24;
+	const size_t EdgeLength = MaxLength/2; // Длина начальной и конечной части строки
 	if (path.length() > MaxLength) {
 		if (path.length() > 2 * EdgeLength + 3) {
 			std::string shortenedPath = path.substr(0, EdgeLength) + "..." +

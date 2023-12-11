@@ -25,14 +25,13 @@ bool isPathsEmpty();
 void craftCreatorWindow(sf::RenderWindow & menu);
 
 
-MenuMain MainMenu;
-MenuSettings SettingsMenu;
 
 std::string chekVersion();
 
 int menu() {
 
 	bool isSettingsActive = false;
+	
 
 	if (isPathsEmpty()) {
 		isSettingsActive = true;
@@ -41,12 +40,17 @@ int menu() {
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
 
-	sf::RenderWindow menu(sf::VideoMode::getDesktopMode(), "TWM creator by depozit", sf::Style::Fullscreen , settings);
+	sf::RenderWindow menu(sf::VideoMode::getDesktopMode(), "TWM creator by depozit", sf::Style::None , settings);
 	menu.setFramerateLimit(60);
 	menu.setVerticalSyncEnabled(true);
 	
+
+	MenuMain MainMenu;
+	MenuSettings SettingsMenu;
+
 	MainMenu.initialization(menu);
 	SettingsMenu.initialization(menu);
+
 
 	sf::Texture backgroundTexture;
 	sf::Sprite backgroundTextureRect;
@@ -75,7 +79,7 @@ int menu() {
 				MainMenu.EventHandler(event, menu, isSettingsActive);
 			}
 			else {
-
+				SettingsMenu.EventHandler(event, menu, isSettingsActive);
 			}
 		}
 		

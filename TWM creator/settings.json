@@ -22,11 +22,11 @@
         "menu_button_active": "#913AFF",
         "menu_button_inactive": "#4e4e4e",
         "menu_text": "#ffffff",
-        "settings_back":"#848484",
-        "setings_folder_background":"#4e4e4e",
-        "settings_path_rect":"#545454"
+        "settings_back": "#848484",
+        "setings_folder_background": "#4e4e4e",
+        "settings_path_rect": "#545454"
     },
-    "path_to_crafts": "C:\\Intel\\iGfx\\XeFX\\Discovery.exe_20404",
-    "path_to_src_icons_from_mod": "C:\\Users\\Depozit\\.designer\\backup\\tmp",
+    "path_to_crafts": "D:\\BeamMP-Launcher\\Resourcess",
+    "path_to_src_icons_from_mod": "C:\\Bethesda.net Launcher\\locales",
     "version": "alpha 0.8"
 }
