@@ -272,6 +272,20 @@ public:
 		folderText2.setPosition(pathRect2I.getPosForText(folderText2));
 		folderText2.move(sf::Vector2f(0, -5));
 
+		chooseDirText1.setFont(brunoFont);
+		chooseDirText1.setString("choose dir");
+		chooseDirText1.setCharacterSize(20);
+		chooseDirText1.setFillColor(SetColor("menu_text", 200));
+		chooseDirText1.setPosition(pathRect1I.getPosForText(chooseDirText1));
+		chooseDirText1.move(sf::Vector2f(0, -5));
+
+		chooseDirText2.setFont(brunoFont);
+		chooseDirText2.setString("choose dir");
+		chooseDirText2.setCharacterSize(20);
+		chooseDirText2.setFillColor(SetColor("menu_text", 200));
+		chooseDirText2.setPosition(pathRect2I.getPosForText(chooseDirText2));
+		chooseDirText2.move(sf::Vector2f(0, -5));
+
 		pathInfo1.setFont(brunoFont);
 		pathInfo1.setString("Path to crafts");
 		pathInfo1.setCharacterSize(20);
@@ -319,8 +333,21 @@ public:
 		menu.draw(languageButton1);
 		menu.draw(languageButton2);
 		menu.draw(languageText);
-		menu.draw(folderText1);
-		menu.draw(folderText2);
+
+		if (folderText1.getString() == "") {
+			menu.draw(chooseDirText1);
+		}
+		else {
+			menu.draw(folderText1);
+		}
+
+		if (folderText2.getString() == "") {
+			menu.draw(chooseDirText2);
+		}
+		else {
+			menu.draw(folderText2);
+		}
+
 		menu.draw(pathInfo1);
 		menu.draw(pathInfo2);
 
@@ -435,7 +462,7 @@ private:
 
 	sf::Texture folderTexture;
 	sf::Font brunoFont;
-	sf::Text returnButtonText, languageText, folderText1, folderText2, pathInfo1, pathInfo2;
+	sf::Text returnButtonText, languageText, folderText1, folderText2, pathInfo1, pathInfo2, chooseDirText1, chooseDirText2;
 	SFMLButton backSettings, folderPath1, folderPath2, pathRect1, pathRect2, returnButton, languageButton1, languageButton2, rectUnderPath1, rectUnderPath2;
 	std::vector<sf::Vector2f> objectsPos;
 	HWND hwnd;

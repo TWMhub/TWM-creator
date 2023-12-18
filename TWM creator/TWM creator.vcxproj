@@ -148,6 +148,9 @@
     <ClInclude Include="modsMenuClass.h" />
     <ClInclude Include="SFMLClasses.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="settings.json" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
