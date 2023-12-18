@@ -21,7 +21,9 @@ void writeTextureAsThreadWithBorders(std::promise<std::vector<sf::Texture>>& pro
 void writeTexturesToBinary(const std::vector<sf::Texture>& allTextures);
 std::vector<sf::Texture> readTexturesFromBinary();
 
-void craftCreatorWindow(sf::RenderWindow & menu) {
+int menu();
+
+void craftCreatorWindow(sf::RenderWindow & menuWindow) {
 	
 	//vector with all items 
 	std::vector<std::string> allItemsNames{};
@@ -185,6 +187,14 @@ void craftCreatorWindow(sf::RenderWindow & menu) {
 				creatorWindow.close();
 			}
 
+			if (returnToMenu.IsMouseOnButton(sf::Mouse::getPosition())) {
+
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+					creatorWindow.close();
+					menu();
+				}
+			}
+
 			//scrolling with middle button
 			if ((scrollBackgroundRect.IsMouseOnButton(sf::Mouse::getPosition()) || scrollBorderLine.IsMouseOnButton(sf::Mouse::getPosition()))
 				&& event.type == sf::Event::MouseWheelScrolled) {
@@ -264,8 +274,8 @@ void craftCreatorWindow(sf::RenderWindow & menu) {
 	
 
 		creatorWindow.display();
-		if (menu.isOpen()) {
-			menu.close();
+		if (menuWindow.isOpen()) {
+			menuWindow.close();
 		}
 		
 

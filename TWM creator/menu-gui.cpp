@@ -11,6 +11,8 @@
 #include "ClassButton.h"
 #include "coloration.h"
 #include "auxiliary functions.h"
+#include "modsMenuClass.h"
+
 
 using std::filesystem::current_path;
 
@@ -21,120 +23,49 @@ void startWindow();
 void startSettingsWindow();
 bool isPathsEmpty();
 void craftCreatorWindow(sf::RenderWindow & menu);
+
+
+
 std::string chekVersion();
 
-int main() {
+int menu() {
+
+	bool isSettingsActive = false;
+	
 
 	if (isPathsEmpty()) {
-		startWindow();
+		isSettingsActive = true;
 	}
 
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
 
-	sf::RenderWindow menu(sf::VideoMode::getDesktopMode(), "TWM creator by depozit", sf::Style::Fullscreen, settings);
-
+	sf::RenderWindow menu(sf::VideoMode::getDesktopMode(), "TWM creator by depozit", sf::Style::None , settings);
 	menu.setFramerateLimit(60);
 	menu.setVerticalSyncEnabled(true);
 	
-	sf::Font speedFont, lazerFont, concielFont, brunoFont;
-	if (!speedFont.loadFromFile("fonts\\speed-speed-700.ttf")) {
-		std::cerr << "Speed font not load";
-	}
-	if (!lazerFont.loadFromFile("fonts\\Roboto.ttf")) {
-		std::cerr << "Lazer font not load";
-	}
-	if (!concielFont.loadFromFile("fonts\\concielianalpha.ttf")) {
-		std::cerr << "conciel font not load";
-	}
-	if (!brunoFont.loadFromFile("fonts\\BrunoAceSC-Regular.ttf")) {
-		std::cerr << "bruno font not load";
-	}
+
+	MenuMain MainMenu;
+	MenuSettings SettingsMenu;
+
+	MainMenu.initialization(menu);
+	SettingsMenu.initialization(menu);
+
 
 	sf::Texture backgroundTexture;
+	sf::Sprite backgroundTextureRect;
 	if (!backgroundTexture.loadFromFile("textures\\application\\!back.png")) {
 		std::cerr << "Background texture not load";
 	}
-
-	sf::Shader testShader;
-	if (sf::Shader::isAvailable())
-	{
-		if (!testShader.loadFromFile("textures\\application\\testShader.jpg", sf::Shader::Vertex))
-		{
-			std::cerr << "shader not load";
-		}
-	}
-
-	sf::Sprite backgroundTextureRect;
+	
 	backgroundTextureRect.setTexture(backgroundTexture);
 
-	
+	sf::Image iconForMenu;
+	if (!iconForMenu.loadFromFile("textures\\application\\icon.png")) {
+		std::cerr << "icon not load" << std::endl;
+	}
+	menu.setIcon(iconForMenu.getSize().x, iconForMenu.getSize().y, iconForMenu.getPixelsPtr());
 
-	sf::Text name1,name2,versionText;
-	name1.setFont(concielFont);
-	name1.setString("TWM");
-	name1.setCharacterSize(160);
-	name1.setFillColor(SetColor("text_name_main"));
-	name1.setPosition(sf::Vector2f(1920/2-name1.getGlobalBounds().width/2-80, 15));
-
-	name2.setFont(concielFont);
-	name2.setString("creator");
-	name2.setCharacterSize(95);
-	name2.setFillColor(SetColor("text_name_second"));
-	name2.setPosition(sf::Vector2f(1920 / 2 - name2.getGlobalBounds().width / 2 + 50, name1.getGlobalBounds().top + name1.getGlobalBounds().height - 30));
-	
-
-	versionText.setFont(concielFont);
-	versionText.setString(chekVersion());
-	versionText.setCharacterSize(15);
-	versionText.setFillColor(SetColor("text_name_second"));
-	versionText.setPosition(name2.getGlobalBounds().left+name2.getGlobalBounds().width-versionText.getGlobalBounds().width, name2.getGlobalBounds().top + name2.getGlobalBounds().height + 10);
-
-
-	SFMLButton creatorButton(400,90,5,SetColor("menu_button_active"));
-	creatorButton.setCenterByWindowByX(menu,350);
-	
-	SFMLButton drawerButton(400, 90, 5, SetColor("menu_button_inactive"));
-	drawerButton.setPos(creatorButton.getPos().x, creatorButton.getPos().y + 40 + creatorButton.getSize().y);
-
-	SFMLButton settingsButton(400, 90, 2.5, SetColor("menu_button_active"));
-	settingsButton.setPos(creatorButton.getPos().x + creatorButton.getSize().x / 2 - settingsButton.getSize().x / 2, creatorButton.getPos().y + 40 * 2 + drawerButton.getSize().y * 2);
-
-	SFMLButton exitButton(200, 75, 2.5, SetColor("menu_button_active"));
-	exitButton.setPos(creatorButton.getPos().x + creatorButton.getSize().x / 2 - exitButton.getSize().x / 2, settingsButton.getPos().y + settingsButton.getSize().y + 40);
-	
-
-	sf::Text nameButtonCraftCreator, nameButtonTexturePainter, nameButtonSettings, nameButtonExit;
-
-	nameButtonCraftCreator.setFont(brunoFont);
-	nameButtonCraftCreator.setString("Craft Creator");
-	nameButtonCraftCreator.setCharacterSize(30);
-	nameButtonCraftCreator.setFillColor(SetColor("menu_text"));
-	nameButtonCraftCreator.setPosition(creatorButton.getPosForText(nameButtonCraftCreator));
-	nameButtonCraftCreator.move(0, -5);
-	
-	nameButtonTexturePainter.setFont(brunoFont);
-	nameButtonTexturePainter.setString("Texture  Painter");
-	nameButtonTexturePainter.setCharacterSize(30);
-	nameButtonTexturePainter.setFillColor(SetColor("menu_text"));
-	nameButtonTexturePainter.setPosition(drawerButton.getPosForText(nameButtonTexturePainter));
-	nameButtonTexturePainter.move(0, -5);
-	
-	nameButtonSettings.setFont(brunoFont);
-	nameButtonSettings.setString("settings");
-	nameButtonSettings.setCharacterSize(30);
-	nameButtonSettings.setFillColor(SetColor("menu_text"));
-	nameButtonSettings.setPosition(settingsButton.getPosForText(nameButtonSettings));
-	nameButtonSettings.move(0, -5);
-	
-	nameButtonExit.setFont(brunoFont);
-	nameButtonExit.setString("exit");
-	nameButtonExit.setCharacterSize(25);
-	nameButtonExit.setFillColor(SetColor("menu_text"));
-	nameButtonExit.setPosition(exitButton.getPosForText(nameButtonExit));
-	nameButtonExit.move(0, -5);
-
-	
 	while (menu.isOpen()) {
 
 		sf::Event event;
@@ -144,72 +75,25 @@ int main() {
 				menu.close();
 			}
 
-			if (creatorButton.IsMouseOnButton(sf::Mouse::getPosition())) {
-				creatorButton.setColor(SetColor("button_shade"));
-				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-					//menu.close();
-					craftCreatorWindow(menu);
-				}
+			if (!isSettingsActive) {
+				MainMenu.EventHandler(event, menu, isSettingsActive);
 			}
 			else {
-				creatorButton.setColor(SetColor("menu_button_active"));
+				SettingsMenu.EventHandler(event, menu, isSettingsActive);
 			}
-
-			if (settingsButton.IsMouseOnButton(sf::Mouse::getPosition())) {
-				settingsButton.setColor(SetColor("button_shade"));
-				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-					startSettingsWindow();
-					menu.setVisible(true);
-					//menu.setVisible(false);
-					
-				
-				}
-			}
-			else {
-				settingsButton.setColor(SetColor("menu_button_active"));
-			}
-
-			if (exitButton.IsMouseOnButton(sf::Mouse::getPosition())) {
-				exitButton.setColor(SetColor("button_shade"));
-				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-					menu.close();
-					return 1;
-				}
-			}
-			else {
-				exitButton.setColor(SetColor("menu_button_active"));
-			}
-
-
 		}
-		
-		
 		
 		menu.clear(SetColor("background"));
 		menu.draw(backgroundTextureRect);
-
-		menu.draw(name1);
-		menu.draw(name2);
-		menu.draw(versionText);
-
 		
-		menu.draw(creatorButton, &testShader);
-		menu.draw(nameButtonCraftCreator);
-
-		menu.draw(drawerButton);
-		menu.draw(nameButtonTexturePainter);
-
-		menu.draw(settingsButton);
-		menu.draw(nameButtonSettings);
-		
-		menu.draw(exitButton);
-		menu.draw(nameButtonExit);
-	
-
-
+		if (!isSettingsActive) {
+			MainMenu.draw(menu);
+		}
+		else {
+			SettingsMenu.draw(menu);
+		}
 		menu.display();
 	}
 
-	
 	return 0;
 }
