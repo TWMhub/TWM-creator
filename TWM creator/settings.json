@@ -22,11 +22,12 @@
         "menu_button_active": "#913AFF",
         "menu_button_inactive": "#4e4e4e",
         "menu_text": "#ffffff",
+        "info_text": "#BA55D3",
         "settings_back": "#848484",
         "setings_folder_background": "#4e4e4e",
         "settings_path_rect": "#545454"
     },
-    "path_to_crafts": "D:\\BeamMP-Launcher\\Resourcess",
-    "path_to_src_icons_from_mod": "C:\\Bethesda.net Launcher\\locales",
+    "path_to_crafts": "",
+    "path_to_src_icons_from_mod": "",
     "version": "alpha 0.8"
 }

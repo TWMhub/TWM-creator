@@ -52,7 +52,7 @@ public:
 
 		versionText.setFont(concielFont);
 		versionText.setString(chekVersion());
-		versionText.setCharacterSize(15);
+		versionText.setCharacterSize(18);
 		versionText.setFillColor(SetColor("text_name_second"));
 		versionText.setPosition(name2.getGlobalBounds().left + name2.getGlobalBounds().width - versionText.getGlobalBounds().width, name2.getGlobalBounds().top + name2.getGlobalBounds().height + 10);
 
@@ -207,14 +207,14 @@ public:
 			std::cerr << "bruno font not load";
 		}
 
-		SFMLButton backSettingsI(600, 400, 5, SetColor("settings_back", 245));
+		SFMLButton backSettingsI(700, 580, 10, SetColor("settings_back", 240));
 		backSettingsI.setCenterByWindow(menu);
 
 		SFMLButton folderPath1I(60, 60, 5, SetColor("setings_folder_background"));
-		folderPath1I.setPos(backSettingsI.getGlobalBounds().left + 50, backSettingsI.getGlobalBounds().top + 150);
+		folderPath1I.setPos(backSettingsI.getGlobalBounds().left + 100, backSettingsI.getGlobalBounds().top + 140);
 
 		SFMLButton folderPath2I(60, 60, 5, SetColor("setings_folder_background"));
-		folderPath2I.setPos(backSettingsI.getGlobalBounds().left + 50, backSettingsI.getGlobalBounds().top + 150 + 25 + folderPath1I.getGlobalBounds().height);
+		folderPath2I.setPos(backSettingsI.getGlobalBounds().left + 100, backSettingsI.getGlobalBounds().top + 140 + 90 + folderPath1I.getGlobalBounds().height);
 
 		SFMLButton pathRect1I(420, 60, 5, SetColor("settings_path_rect", 200));
 		pathRect1I.setPos(folderPath1I.getGlobalBounds().left + folderPath1I.getGlobalBounds().width + 10, folderPath1I.getGlobalBounds().top);
@@ -232,14 +232,22 @@ public:
 		SFMLButton languageButton2I(100, 30, 1, SetColor("menu_button_inactive"));
 		languageButton2I.setPos(backSettingsI.getGlobalBounds().left + backSettingsI.getGlobalBounds().width / 2 , backSettingsI.getGlobalBounds().top + 50);
 
+		SFMLButton rectUnderPath1I(560, 120, 10, SetColor("menu_button_inactive",130));
+		rectUnderPath1I.setPos(backSettingsI.getGlobalBounds().left + backSettingsI.getGlobalBounds().width / 2 - rectUnderPath1I.getSize().x / 2,
+			folderPath1I.getPos().y - 45);
+
+		SFMLButton rectUnderPath2I = rectUnderPath1I;
+		rectUnderPath2I.setPos(backSettingsI.getGlobalBounds().left + backSettingsI.getGlobalBounds().width / 2 - rectUnderPath1I.getSize().x / 2,
+			folderPath2I.getPos().y - 45);
+
 		
 
 		returnButtonText.setFont(brunoFont);
-		returnButtonText.setString("return");
+		returnButtonText.setString("done");
 		returnButtonText.setCharacterSize(20);
 		returnButtonText.setFillColor(SetColor("menu_text"));
 		returnButtonText.setPosition(returnButtonI.getPosForText(returnButtonText));
-		returnButtonText.move(sf::Vector2f(0, -5));
+		returnButtonText.move(sf::Vector2f(0, -6));
 
 		languageText.setFont(brunoFont);
 		languageText.setString("will be localization");
@@ -264,10 +272,28 @@ public:
 		folderText2.setPosition(pathRect2I.getPosForText(folderText2));
 		folderText2.move(sf::Vector2f(0, -5));
 
+		pathInfo1.setFont(brunoFont);
+		pathInfo1.setString("Path to crafts");
+		pathInfo1.setCharacterSize(20);
+		pathInfo1.setFillColor(SetColor("info_text"));
+		pathInfo1.setPosition(rectUnderPath1I.getPosForText(pathInfo1));
+		pathInfo1.move(sf::Vector2f(0, -40));
+
+		pathInfo2.setFont(brunoFont);
+		pathInfo2.setString("Path to custom icons");
+		pathInfo2.setCharacterSize(20);
+		pathInfo2.setFillColor(SetColor("info_text"));
+		pathInfo2.setPosition(rectUnderPath2I.getPosForText(pathInfo2));
+		pathInfo2.move(sf::Vector2f(0, -40));
+
+		
+
 		HWND hwnd1 = menu.getSystemHandle();
 		SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 
 		backSettings = backSettingsI;
+		rectUnderPath1 = rectUnderPath1I;
+		rectUnderPath2 = rectUnderPath2I;
 		folderPath1 = folderPath1I;
 		folderPath2 = folderPath2I;
 		pathRect1 = pathRect1I;
@@ -282,8 +308,10 @@ public:
 
 	void draw(sf::RenderWindow& menu) {
 		menu.draw(backSettings);
-		folderPath1.drawSprite(folderTexture, sf::Vector2f(-3, -3), sf::Vector2f(0.06, 0.06), menu);
-		folderPath2.drawSprite(folderTexture, sf::Vector2f(-3, -3), sf::Vector2f(0.06, 0.06), menu);
+		menu.draw(rectUnderPath1);
+		menu.draw(rectUnderPath2);
+		folderPath1.drawSprite(folderTexture, sf::Vector2f(0, 0), sf::Vector2f(0.06, 0.06), menu);
+		folderPath2.drawSprite(folderTexture, sf::Vector2f(0, 0), sf::Vector2f(0.06, 0.06), menu);
 		menu.draw(pathRect1);
 		menu.draw(pathRect2);
 		menu.draw(returnButton);
@@ -293,6 +321,10 @@ public:
 		menu.draw(languageText);
 		menu.draw(folderText1);
 		menu.draw(folderText2);
+		menu.draw(pathInfo1);
+		menu.draw(pathInfo2);
+
+		
 	}
 
 	void move(sf::Vector2f pos) {
@@ -310,7 +342,7 @@ public:
 		
 
 		if (folderPath1.IsMouseOnButton(sf::Mouse::getPosition(menu))) {
-			folderPath1.setOutline(SetColor("outline_main"), 5);
+			folderPath1.setColor(SetColor("menu_button_active"));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 				sf::Vector2u sizeWindow(menu.getSize().x, menu.getSize().y);
 				menu.setSize(sf::Vector2u(1919, 1079));
@@ -332,11 +364,11 @@ public:
 			}
 		}
 		else {
-			folderPath1.setOutline(SetColor("outline_path_color"), 5);
+			folderPath1.setColor(SetColor("setings_folder_background"));
 		}
 
 		if (folderPath2.IsMouseOnButton(sf::Mouse::getPosition(menu))) {
-			folderPath2.setOutline(SetColor("outline_main"), 5);
+			folderPath2.setColor(SetColor("menu_button_active"));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
 				sf::Vector2u sizeWindow(menu.getSize().x,menu.getSize().y);
@@ -360,8 +392,11 @@ public:
 			}
 		}
 		else {
-			folderPath2.setOutline(SetColor("outline_path_color"), 5);
+			folderPath2.setColor(SetColor("setings_folder_background"));
 		}
+
+		
+
 		if (returnButton.IsMouseOnButton(sf::Mouse::getPosition())) {
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 				if (checkingForPresenceOfPath("path_to_crafts") == "") {
@@ -400,8 +435,8 @@ private:
 
 	sf::Texture folderTexture;
 	sf::Font brunoFont;
-	sf::Text returnButtonText, languageText, folderText1, folderText2;
-	SFMLButton backSettings, folderPath1, folderPath2, pathRect1, pathRect2, returnButton, languageButton1, languageButton2;
+	sf::Text returnButtonText, languageText, folderText1, folderText2, pathInfo1, pathInfo2;
+	SFMLButton backSettings, folderPath1, folderPath2, pathRect1, pathRect2, returnButton, languageButton1, languageButton2, rectUnderPath1, rectUnderPath2;
 	std::vector<sf::Vector2f> objectsPos;
 	HWND hwnd;
 };
