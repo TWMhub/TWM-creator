@@ -232,7 +232,7 @@ public:
 		SFMLButton languageButton2I(100, 30, 1, SetColor("menu_button_inactive"));
 		languageButton2I.setPos(backSettingsI.getGlobalBounds().left + backSettingsI.getGlobalBounds().width / 2 , backSettingsI.getGlobalBounds().top + 50);
 
-		SFMLButton rectUnderPath1I(560, 120, 10, SetColor("menu_button_inactive",130));
+		SFMLButton rectUnderPath1I(560, 120, 10, SetColor("text_name_main",130));
 		rectUnderPath1I.setPos(backSettingsI.getGlobalBounds().left + backSettingsI.getGlobalBounds().width / 2 - rectUnderPath1I.getSize().x / 2,
 			folderPath1I.getPos().y - 45);
 
@@ -289,14 +289,14 @@ public:
 		pathInfo1.setFont(brunoFont);
 		pathInfo1.setString("Path to crafts");
 		pathInfo1.setCharacterSize(20);
-		pathInfo1.setFillColor(SetColor("info_text"));
+		pathInfo1.setFillColor(SetColor("menu_text"));
 		pathInfo1.setPosition(rectUnderPath1I.getPosForText(pathInfo1));
 		pathInfo1.move(sf::Vector2f(0, -40));
 
 		pathInfo2.setFont(brunoFont);
 		pathInfo2.setString("Path to custom icons");
 		pathInfo2.setCharacterSize(20);
-		pathInfo2.setFillColor(SetColor("info_text"));
+		pathInfo2.setFillColor(SetColor("menu_text"));
 		pathInfo2.setPosition(rectUnderPath2I.getPosForText(pathInfo2));
 		pathInfo2.move(sf::Vector2f(0, -40));
 
@@ -369,7 +369,7 @@ public:
 		
 
 		if (folderPath1.IsMouseOnButton(sf::Mouse::getPosition(menu))) {
-			folderPath1.setColor(SetColor("menu_button_active"));
+			folderPath1.setColor(SetColor("button_shade"));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 				sf::Vector2u sizeWindow(menu.getSize().x, menu.getSize().y);
 				menu.setSize(sf::Vector2u(1919, 1079));
@@ -391,11 +391,11 @@ public:
 			}
 		}
 		else {
-			folderPath1.setColor(SetColor("setings_folder_background"));
+			folderPath1.setColor(SetColor("settings_path_rect"));
 		}
 
 		if (folderPath2.IsMouseOnButton(sf::Mouse::getPosition(menu))) {
-			folderPath2.setColor(SetColor("menu_button_active"));
+			folderPath2.setColor(SetColor("button_shade"));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
 				sf::Vector2u sizeWindow(menu.getSize().x,menu.getSize().y);
@@ -419,7 +419,7 @@ public:
 			}
 		}
 		else {
-			folderPath2.setColor(SetColor("setings_folder_background"));
+			folderPath2.setColor(SetColor("settings_path_rect"));
 		}
 
 		
