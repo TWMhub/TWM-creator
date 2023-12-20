@@ -11,7 +11,7 @@
 std::string chekVersion();
 sf::Color SetColor(std::string col);
 sf::Color SetColor(std::string col, float alphaColor);
-void craftCreatorWindow(sf::RenderWindow& menu);
+void craftCreatorWindow(sf::RenderWindow& menuWindow, std::vector<std::string>& allItemsNames, std::vector<sf::Texture>& allItemsTexture);
 void shell(std::string& pathUser); 
 std::string checkingForPresenceOfPath(std::string nameOfPath);
 std::string shorteningTheString(const std::string& path);
@@ -101,6 +101,7 @@ public:
 		nameButtonExit.setPosition(exitButton.getPosForText(nameButtonExit));
 		nameButtonExit.move(0, -5);
 
+		if (cursor.loadFromSystem(sf::Cursor::ArrowWait));
 		//setBasePos();
 	}
 
@@ -108,8 +109,10 @@ public:
 		if (creatorButton.IsMouseOnButton(sf::Mouse::getPosition())) {
 				creatorButton.setColor(SetColor("button_shade"));
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-					//menu.close();
-					craftCreatorWindow(menu);
+					menu.setMouseCursor(cursor);
+					std::thread b(writeAllItemsToVectors, std::ref(allItemsNames), std::ref(allItemsTexture));
+					b.join();
+					craftCreatorWindow(menu,allItemsNames,allItemsTexture);
 				}
 			}
 			else {
@@ -191,6 +194,9 @@ private:
 	SFMLButton creatorButton, drawerButton, settingsButton, exitButton;
 	sf::Text nameButtonCraftCreator, nameButtonTexturePainter, nameButtonSettings, nameButtonExit;
 	std::vector<sf::Vector2f> objectPos;
+	std::vector<std::string> allItemsNames{};
+	std::vector<sf::Texture> allItemsTexture{};
+	sf::Cursor cursor;
 };
 
 
@@ -232,7 +238,7 @@ public:
 		SFMLButton languageButton2I(100, 30, 1, SetColor("menu_button_inactive"));
 		languageButton2I.setPos(backSettingsI.getGlobalBounds().left + backSettingsI.getGlobalBounds().width / 2 , backSettingsI.getGlobalBounds().top + 50);
 
-		SFMLButton rectUnderPath1I(560, 120, 10, SetColor("menu_button_inactive",130));
+		SFMLButton rectUnderPath1I(560, 120, 10, SetColor("text_name_main",130));
 		rectUnderPath1I.setPos(backSettingsI.getGlobalBounds().left + backSettingsI.getGlobalBounds().width / 2 - rectUnderPath1I.getSize().x / 2,
 			folderPath1I.getPos().y - 45);
 
@@ -289,14 +295,14 @@ public:
 		pathInfo1.setFont(brunoFont);
 		pathInfo1.setString("Path to crafts");
 		pathInfo1.setCharacterSize(20);
-		pathInfo1.setFillColor(SetColor("info_text"));
+		pathInfo1.setFillColor(SetColor("menu_text"));
 		pathInfo1.setPosition(rectUnderPath1I.getPosForText(pathInfo1));
 		pathInfo1.move(sf::Vector2f(0, -40));
 
 		pathInfo2.setFont(brunoFont);
 		pathInfo2.setString("Path to custom icons");
 		pathInfo2.setCharacterSize(20);
-		pathInfo2.setFillColor(SetColor("info_text"));
+		pathInfo2.setFillColor(SetColor("menu_text"));
 		pathInfo2.setPosition(rectUnderPath2I.getPosForText(pathInfo2));
 		pathInfo2.move(sf::Vector2f(0, -40));
 
@@ -369,7 +375,7 @@ public:
 		
 
 		if (folderPath1.IsMouseOnButton(sf::Mouse::getPosition(menu))) {
-			folderPath1.setColor(SetColor("menu_button_active"));
+			folderPath1.setColor(SetColor("button_shade"));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 				sf::Vector2u sizeWindow(menu.getSize().x, menu.getSize().y);
 				menu.setSize(sf::Vector2u(1919, 1079));
@@ -391,11 +397,11 @@ public:
 			}
 		}
 		else {
-			folderPath1.setColor(SetColor("setings_folder_background"));
+			folderPath1.setColor(SetColor("settings_path_rect"));
 		}
 
 		if (folderPath2.IsMouseOnButton(sf::Mouse::getPosition(menu))) {
-			folderPath2.setColor(SetColor("menu_button_active"));
+			folderPath2.setColor(SetColor("button_shade"));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
 				sf::Vector2u sizeWindow(menu.getSize().x,menu.getSize().y);
@@ -419,7 +425,7 @@ public:
 			}
 		}
 		else {
-			folderPath2.setColor(SetColor("setings_folder_background"));
+			folderPath2.setColor(SetColor("settings_path_rect"));
 		}
 
 		
