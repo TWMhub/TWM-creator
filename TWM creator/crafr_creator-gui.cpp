@@ -15,73 +15,10 @@ sf::Color SetColor(std::string col, float alphaColor);
 
 void writeAllItemsToVectors(std::vector<std::string>& itemsNames, std::vector<sf::Texture>& itemsSprites);
 
-void writeAllItemsNames(std::vector<std::string>& allItemsNames);
-void writeTextureAsThreadWithBorders(std::promise<std::vector<sf::Texture>>& promiseTextures, int topBorder, int lowBorder);
-
-void writeTexturesToBinary(const std::vector<sf::Texture>& allTextures);
-std::vector<sf::Texture> readTexturesFromBinary();
-
 int menu();
 
-void craftCreatorWindow(sf::RenderWindow & menuWindow) {
+void craftCreatorWindow(sf::RenderWindow & menuWindow, std::vector<std::string>& allItemsNames, std::vector<sf::Texture>& allItemsTexture) {
 	
-	//vector with all items 
-	std::vector<std::string> allItemsNames{};
-	std::vector<sf::Texture> allItemsTexture{};
-
-	//thread
-	/*try
-	{
-
-		const unsigned int avaibleCores = std::thread::hardware_concurrency();
-		writeAllItemsNames(allItemsNames);
-	
-		std::promise<std::vector<sf::Texture>> promise;
-		std::future<std::vector<sf::Texture>> future;
-		std::vector<std::promise<std::vector<sf::Texture>>> promiseTextures;
-		std::vector< std::future<std::vector<sf::Texture>>> futureTextures;
-		
-		for (int i = 0; i < avaibleCores; i++) {
-			std::cerr << "1";
-			promiseTextures.push_back(std::move(promise));
-			std::cerr << "2";
-			futureTextures.push_back(std::move(promiseTextures[i].get_future()));
-			std::cerr << "4";
-		}
-		
-		std::vector<std::thread> threads;
-
-		std::vector<int> borders;
-		borders.push_back(0);
-		for (int i = 1; i < avaibleCores; i++) {
-			borders.push_back(allItemsNames.size() / avaibleCores * i);
-			std::cerr << borders[i] << std::endl;
-		}
-		borders.push_back(allItemsNames.size());
-
-		for (int i = 0; i < avaibleCores; i++) {
-			threads.emplace_back(writeTextureAsThreadWithBorders, std::ref(promiseTextures[i]), borders[i], borders[i + 1]);
-		}
-
-		for (auto& thread : threads) {
-			thread.join();
-		}
-
-		for (int i = 0; i < avaibleCores; i++) {
-			allItemsTexture.insert(allItemsTexture.end(), futureTextures[i].get().begin(), futureTextures[i].get().end());
-		}
-	}
-	catch (std::exception& e) {
-		std::cerr << e.what();
-	}*/
-
-	
-	
-
-	writeAllItemsToVectors(allItemsNames, allItemsTexture);
-	//writeTexturesToBinary(allItemsTexture);
-	//writeAllItemsNames(allItemsNames);
-	//allItemsTexture = readTexturesFromBinary();
 
 	sf::Texture searchIconTexture;
 	if (!searchIconTexture.loadFromFile("textures\\application\\search.png")) {
@@ -114,7 +51,7 @@ void craftCreatorWindow(sf::RenderWindow & menuWindow) {
 
 	SFMLButton item1(330, 75, 30, SetColor("button"));
 	item1.setOutline(SetColor("button_outline"), 4);
-	item1.setPos(10, 60);
+	item1.setPos(10.0, 60.0);
 	//item1.setTexture(&minecraftVanilaBack);
 
 	for (int i = 0; i < COUNT_BUTTONS_ON_SCROLL_MENU; ++i) {
@@ -135,11 +72,9 @@ void craftCreatorWindow(sf::RenderWindow & menuWindow) {
 	creatorWindow.setFramerateLimit(60);
 	creatorWindow.setVerticalSyncEnabled(true);
 
+	SFMLButton searchRect(370, 50, 0, SetColor("search_rect"));
 
-	sf::RectangleShape searchRect(sf::Vector2f(370, 50));
-	searchRect.setFillColor(SetColor("search_rect"));
-
-	SFMLButton scrollBackgroundRect(350, sf::VideoMode::getDesktopMode().height-searchRect.getSize().y, 0, SetColor("scroll_background_rect"));
+	SFMLButton scrollBackgroundRect(350, sf::VideoMode::getDesktopMode().height- searchRect.getSize().y, 0, SetColor("scroll_background_rect"));
 	scrollBackgroundRect.setPos(0, searchRect.getSize().y);
 
 	SFMLButton scrollBorderLine(20,sf::VideoMode::getDesktopMode().height,0,SetColor("scroll_border_line"));
@@ -247,6 +182,13 @@ void craftCreatorWindow(sf::RenderWindow & menuWindow) {
 			}
 			else {
 				scrollButton.setColor(SetColor("button"));
+			}
+
+			if (searchRect.IsMouseOnButton(sf::Mouse::getPosition())) {
+				searchIcon.setColor(SetColor("button_shade"));
+			}
+			else {
+				searchIcon.setColor(SetColor("disabled_button"));
 			}
 
 

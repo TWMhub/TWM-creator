@@ -11,7 +11,7 @@
 std::string chekVersion();
 sf::Color SetColor(std::string col);
 sf::Color SetColor(std::string col, float alphaColor);
-void craftCreatorWindow(sf::RenderWindow& menu);
+void craftCreatorWindow(sf::RenderWindow& menuWindow, std::vector<std::string>& allItemsNames, std::vector<sf::Texture>& allItemsTexture);
 void shell(std::string& pathUser); 
 std::string checkingForPresenceOfPath(std::string nameOfPath);
 std::string shorteningTheString(const std::string& path);
@@ -101,6 +101,7 @@ public:
 		nameButtonExit.setPosition(exitButton.getPosForText(nameButtonExit));
 		nameButtonExit.move(0, -5);
 
+		if (cursor.loadFromSystem(sf::Cursor::ArrowWait));
 		//setBasePos();
 	}
 
@@ -108,8 +109,10 @@ public:
 		if (creatorButton.IsMouseOnButton(sf::Mouse::getPosition())) {
 				creatorButton.setColor(SetColor("button_shade"));
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-					//menu.close();
-					craftCreatorWindow(menu);
+					menu.setMouseCursor(cursor);
+					std::thread b(writeAllItemsToVectors, std::ref(allItemsNames), std::ref(allItemsTexture));
+					b.join();
+					craftCreatorWindow(menu,allItemsNames,allItemsTexture);
 				}
 			}
 			else {
@@ -191,6 +194,9 @@ private:
 	SFMLButton creatorButton, drawerButton, settingsButton, exitButton;
 	sf::Text nameButtonCraftCreator, nameButtonTexturePainter, nameButtonSettings, nameButtonExit;
 	std::vector<sf::Vector2f> objectPos;
+	std::vector<std::string> allItemsNames{};
+	std::vector<sf::Texture> allItemsTexture{};
+	sf::Cursor cursor;
 };
 
 

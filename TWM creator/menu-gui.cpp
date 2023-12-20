@@ -22,9 +22,8 @@ void removeTextShadow(sf::Text& text, sf::Color textColor);
 void startWindow();
 void startSettingsWindow();
 bool isPathsEmpty();
-void craftCreatorWindow(sf::RenderWindow & menu);
-
-
+void craftCreatorWindow(sf::RenderWindow& menuWindow, std::vector<std::string>& allItemsNames, std::vector<sf::Texture>& allItemsTexture);
+void writeAllItemsToVectors(std::vector<std::string>& itemsNames, std::vector<sf::Texture>& itemsSprites);
 
 std::string chekVersion();
 
