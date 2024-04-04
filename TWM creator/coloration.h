@@ -6,11 +6,13 @@
 #define auxiliary_functions_h
 #include "SFML/Graphics.hpp"
 
-std::string getСurrentPath();
+std::string getРЎurrentPath() {
+	return std::filesystem::current_path().string();
+}
 
 std::string getColorFromJson(std::string nameColor) {
 
-	std::string name = getСurrentPath() + "\\settings.json";
+	std::string name = getРЎurrentPath() + "\\settings.json";
 	std::ifstream file(name);
 
 	if (!file.is_open()) {
@@ -57,7 +59,7 @@ int HexToInt(char a) {
 }
 
 
-sf::Color SetColor(std::string col) { // принимает название цвета выдаёт цвет из sfml
+sf::Color SetColor(std::string col) { // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ sfml
 	std::string color = getColorFromJson(col);
 	if (color.length() != 7) {
 		std::cerr << color.length();
@@ -72,7 +74,7 @@ sf::Color SetColor(std::string col) { // принимает название цвета выдаёт цвет из
 	return a;
 }
 
-sf::Color SetColor(std::string col, float alphaColor) { // принимает название цвета выдаёт цвет из sfml
+sf::Color SetColor(std::string col, float alphaColor) { // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ sfml
 	std::string color = getColorFromJson(col);
 	if (color.length() != 7) {
 		std::cerr << color.length();
